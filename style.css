@@ -1,0 +1,19 @@
+.header {
+  background-color: rgb(46, 46, 133);
+  color: white;
+  padding: 4rem 1rem;
+  text-align: center;
+  border-radius: 5px;
+}
+
+h1 {
+  font-family: 'serif';
+}
+
+.row {
+  margin: 1rem 0;
+}
+
+form {
+  margin: 1rem;
+}
