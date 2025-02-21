@@ -69,15 +69,31 @@ async function callAPI() {
   }
   console.log(userData)
 
-  const queryURL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${userData.searchTerm}&api-key=${userData.api_key}`;
+  let queryURL;
+
+  if (userData.startYear && userData.endYear) {
+    queryURL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${userData.searchTerm}&begin_date=${userData.startYear+"0101"}&end_date=${userData.endYear+"1231"}&api-key=${userData.api_key}`;
+    console.log("startDate and endDate");
+  } else if (userData.startYear) {
+    queryURL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${userData.searchTerm}&begin_date=${userData.startYear+"0101"}&api-key=${userData.api_key}`;
+    console.log("startDate only");
+  } else if (userData.endYear) {
+    queryURL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${userData.searchTerm}&end_date=${userData.endYear+"1231"}&api-key=${userData.api_key}`;
+    console.log("endDate only");
+  } else {
+    queryURL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${userData.searchTerm}&api-key=${userData.api_key}`;
+    console.log("no dates");
+  }
+
   console.log(queryURL)
 
   const result = await $.ajax({url: queryURL, method: "GET"}); // query NYT API
   const data = result.response.docs;
 
   console.log("data: ", data)
+  articleDumpEl.empty(); // empty the current articles from articleDumpEl before rendering new search articles
+  
   // Dynamically create card containing all our data
-
   for(let i=0; i < userData.numRecords;i++) {
     let articleObj = {
       abstract: data[i].abstract,
@@ -88,7 +104,6 @@ async function callAPI() {
       id: data[i]._id
     }
 
-   // console.log(articleObj)
     renderArticle(articleObj);
 
   }
@@ -96,7 +111,6 @@ async function callAPI() {
 
 clearBtn.on("click", function(event) {
   event.preventDefault();
-  console.log(this.id);
   articleDumpEl.empty();
 })
 
