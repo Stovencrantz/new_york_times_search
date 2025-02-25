@@ -1,6 +1,7 @@
 .header {
-  background-color: rgb(46, 46, 133);
-  color: white;
+  background-image: url("./images/jas-min-hYaAxItJGoM-unsplash.jpg");
+  background-size:cover;
+  color: rgb(250, 235, 215);
   padding: 4rem 1rem;
   text-align: center;
   border-radius: 5px;
@@ -8,6 +9,8 @@
 
 h1 {
   font-family: 'serif';
+  font-size: 4rem;
+  text-shadow: -1.5px 0 black, 0 1.5px black, 1.5px 0 black, 0 -1.5px black;
 }
 
 .row {
